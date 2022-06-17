@@ -1,7 +1,10 @@
 const express = require('express');
-const passport = require('passport');
 const app = express();
 
+
+
+const socialController = require('./controller/socialMedia.controller')
+app.set("view engine", "ejs")
 
 const db = require('./config/db.config')
 const initRoutes = require('./routes/route')
@@ -9,9 +12,11 @@ app.use(express.urlencoded({extended:true}))
 global.__basedir = __dirname + "/..";
 
 
+const socialMiddleware = require('./middleware/socialMedia.middleware')
 
-
+  
 initRoutes(app)
+
 
 // db.sequelize.sync({force: true})
 // .then( () => {
@@ -19,12 +24,6 @@ initRoutes(app)
 //  })
 
 
-
-app.get('/', (req, res) => {
-    res.send('Working...')
-})
-
-//app.use()
 
 const port = process.env.PORT || 5000
 app.listen(port, () => {
